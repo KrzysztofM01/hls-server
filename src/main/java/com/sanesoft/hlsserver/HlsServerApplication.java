@@ -9,5 +9,4 @@ public class HlsServerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(HlsServerApplication.class, args);
 	}
-
 }
