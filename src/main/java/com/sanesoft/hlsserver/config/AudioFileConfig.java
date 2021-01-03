@@ -1,8 +1,13 @@
 package com.sanesoft.hlsserver.config;
 
 import java.nio.file.Path;
+import java.time.Duration;
 
 public interface AudioFileConfig {
 
-    Path getAudioFileToSavePath();
+    Path getRootAudioFileSavePath();
+
+    Duration getAudioPartDuration();
+
+    String getPathToFFmpeg();
 }
