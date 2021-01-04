@@ -1,9 +1,11 @@
 package com.sanesoft.hlsserver.database.entity;
 
+import com.sanesoft.hlsserver.database.converter.PathConverter;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.nio.file.Path;
 import java.time.Instant;
 
 @Entity
@@ -24,7 +26,8 @@ public class AudioFileInfo {
     Instant createdOn;
     String name;
     @Column(name = "path_to_file")
-    String pathToFile;
+    @Convert(converter = PathConverter.class)
+    Path pathToFile;
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id")
     User user;

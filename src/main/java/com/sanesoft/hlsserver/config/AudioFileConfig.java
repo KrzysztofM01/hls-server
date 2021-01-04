@@ -9,5 +9,7 @@ public interface AudioFileConfig {
 
     Duration getAudioPartDuration();
 
+    Integer getAudioBitRate();
+
     String getPathToFFmpeg();
 }

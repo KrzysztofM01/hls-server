@@ -3,9 +3,14 @@ package com.sanesoft.hlsserver.database.repository;
 import com.sanesoft.hlsserver.database.entity.AudioFileInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface AudioFileRepository extends JpaRepository<AudioFileInfo, Long> {
 
-    List<AudioFileInfo> findByUserName(String name);
+
+    Optional<AudioFileInfo> findByNameAndUserName(String name, String userName);
+
+    Optional<AudioFileInfo> findByName(String name);
+
+
 }

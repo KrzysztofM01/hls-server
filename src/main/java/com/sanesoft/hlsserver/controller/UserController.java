@@ -19,11 +19,12 @@ public class UserController {
     private final UserRepository repository;
     private final DtoMapper<User, UserRequest, UserResponse> userDtoMapper;
 
+    // TODO add ResponseEntity wrappers as return type
     @GetMapping("/users")
     List<UserResponse> all() {
         return repository.findAll()
                 .stream()
-                .map(s -> userDtoMapper.mapResponse(s))
+                .map(userDtoMapper::mapResponse)
                 .collect(Collectors.toList());
     }
 
