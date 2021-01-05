@@ -7,6 +7,7 @@ import com.sanesoft.hlsserver.mapper.DtoMapper;
 import com.sanesoft.hlsserver.model.request.UserRequest;
 import com.sanesoft.hlsserver.model.response.UserResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,29 +20,31 @@ public class UserController {
     private final UserRepository repository;
     private final DtoMapper<User, UserRequest, UserResponse> userDtoMapper;
 
-    // TODO add ResponseEntity wrappers as return type
     @GetMapping("/users")
-    List<UserResponse> all() {
-        return repository.findAll()
+    ResponseEntity<List<UserResponse>> all() {
+        return ResponseEntity.ok(repository.findAll()
                 .stream()
                 .map(userDtoMapper::mapResponse)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     @PostMapping("/users")
-    void newUser(@RequestBody UserRequest newUser) {
+    ResponseEntity<Void> newUser(@RequestBody UserRequest newUser) {
         repository.save(userDtoMapper.mapRequest(newUser));
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/users/{name}")
-    UserResponse findOne(@PathVariable String name) {
+    ResponseEntity<UserResponse> findOne(@PathVariable String name) {
         return repository.findByName(name)
                 .map(userDtoMapper::mapResponse)
+                .map(ResponseEntity::ok)
                 .orElseThrow(() -> new EntityNotFoundException(name));
     }
 
     @DeleteMapping("/users/{name}")
-    void deleteUser(@PathVariable String name) {
+    ResponseEntity<Void> deleteUser(@PathVariable String name) {
         repository.deleteByName(name);
+        return ResponseEntity.ok().build();
     }
 }

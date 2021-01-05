@@ -59,8 +59,7 @@ public class AudioFileController {
     @GetMapping(value = "/users/{userName}/audio-files/index/{audioName}", produces = "audio/mpegurl")
     ResponseEntity<String> getAudioIndex(@PathVariable String userName,
                                        @PathVariable String audioName) {
-//        return audioRepository.findByNameAndUserName(userName, audioName) //TODO fix this query
-        return audioRepository.findByName(audioName)
+        return audioRepository.findByNameAndUserName(audioName, userName)
                 .map(AudioFileInfo::getPathToFile)
                 .map(s -> {
                     try {
@@ -78,8 +77,7 @@ public class AudioFileController {
                                             @PathVariable Integer audioPartId) {
         // TODO reading from database is not optimal, it would be best to create short-lived memory cache that
         //  would remember userName+audioName as key and path to the directory where audio chunks are stored.
-//        return audioRepository.findByNameAndUserName(userName, audioName) // TODO fix this query
-        return audioRepository.findByName(audioName)
+        return audioRepository.findByNameAndUserName(audioName, userName)
                 .map(AudioFileInfo::getPathToFile)
                 .map(s -> {
                     try {
