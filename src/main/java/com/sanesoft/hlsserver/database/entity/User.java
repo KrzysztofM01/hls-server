@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Table(name = User.TABLE_NAME)
 @ToString(exclude = "audioFileInfos")
+@EqualsAndHashCode(exclude = {"audioFileInfos", "createdOn", "id"})
 public class User {
 
     public static final String TABLE_NAME = "user";

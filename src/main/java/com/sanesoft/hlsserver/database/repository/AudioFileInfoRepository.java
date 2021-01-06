@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface AudioFileRepository extends JpaRepository<AudioFileInfo, Long> {
+public interface AudioFileInfoRepository extends JpaRepository<AudioFileInfo, Long> {
 
     @Query("select afi from AudioFileInfo afi " +
             "join User u on u=afi.user " +

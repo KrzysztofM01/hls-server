@@ -15,6 +15,7 @@ import java.time.Instant;
 @AllArgsConstructor
 @Table(name = AudioFileInfo.TABLE_NAME)
 @ToString(exclude = "user")
+@EqualsAndHashCode(exclude = {"user", "createdOn", "id"})
 public class AudioFileInfo {
 
     public static final String TABLE_NAME = "audio_file_info";

@@ -1,7 +1,7 @@
 package com.sanesoft.hlsserver.controller;
 
 import com.sanesoft.hlsserver.database.entity.AudioFileInfo;
-import com.sanesoft.hlsserver.database.repository.AudioFileRepository;
+import com.sanesoft.hlsserver.database.repository.AudioFileInfoRepository;
 import com.sanesoft.hlsserver.database.repository.UserRepository;
 import com.sanesoft.hlsserver.exception.EntityNotFoundException;
 import com.sanesoft.hlsserver.service.audio.exception.M3U8EncoderException;
@@ -23,7 +23,7 @@ import java.nio.file.Path;
 @RequestMapping("/users/{userName}/audio-files")
 public class AudioFileController {
 
-    private final AudioFileRepository audioRepository;
+    private final AudioFileInfoRepository audioRepository;
     private final UserRepository userRepository;
     private final M3U8Encoder m3U8Encoder;
     private final M3U8FileReader m3U8FileReader;
