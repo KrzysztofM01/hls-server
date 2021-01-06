@@ -1,5 +1,6 @@
 package com.sanesoft.hlsserver.mapper;
 
-public interface DtoResponseMapper<Entity, Response> {
-    Response mapResponse(Entity entity);
+public interface DtoResponseMapper<T, R> {
+
+    R mapToResponse(T entity);
 }

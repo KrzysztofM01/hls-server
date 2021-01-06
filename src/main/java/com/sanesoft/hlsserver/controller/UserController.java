@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
-public class UserController {
+public class UserController { //TODO tests
 
     private final UserRepository repository;
     private final DtoMapper<User, UserRequest, UserResponse> userDtoMapper;
@@ -25,20 +25,20 @@ public class UserController {
     ResponseEntity<List<UserResponse>> all() {
         return ResponseEntity.ok(repository.findAll()
                 .stream()
-                .map(userDtoMapper::mapResponse)
+                .map(userDtoMapper::mapToResponse)
                 .collect(Collectors.toList()));
     }
 
     @PostMapping()
     ResponseEntity<Void> newUser(@RequestBody UserRequest newUser) {
-        repository.save(userDtoMapper.mapRequest(newUser));
+        repository.save(userDtoMapper.mapFromRequest(newUser));
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{name}")
     ResponseEntity<UserResponse> findOne(@PathVariable String name) {
         return repository.findByName(name)
-                .map(userDtoMapper::mapResponse)
+                .map(userDtoMapper::mapToResponse)
                 .map(ResponseEntity::ok)
                 .orElseThrow(() -> new EntityNotFoundException(name));
     }

@@ -1,5 +1,4 @@
 package com.sanesoft.hlsserver.mapper;
 
-public interface DtoMapper<Entity, Request, Response>
-        extends DtoRequestMapper<Entity, Request>, DtoResponseMapper<Entity, Response> {
+public interface DtoMapper<T, V, R> extends DtoRequestMapper<T, V>, DtoResponseMapper<T, R> {
 }

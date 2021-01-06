@@ -21,7 +21,7 @@ import java.nio.file.Path;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/users/{userName}/audio-files")
-public class AudioFileController {
+public class AudioFileController { //TODO tests
 
     private final AudioFileInfoRepository audioRepository;
     private final UserRepository userRepository;
@@ -40,7 +40,7 @@ public class AudioFileController {
                 .or(() -> userRepository.findByName(userName)
                         .map(user -> {
                             try {
-                                Path path = m3U8Encoder.encodeFileToM3UFormat(user, audioName, file.getInputStream());
+                                Path path = m3U8Encoder.encodeFileToM3UFormat(user.getName(), audioName, file.getInputStream());
                                 audioRepository.save(AudioFileInfo.builder()
                                         .user(user)
                                         .name(audioName)

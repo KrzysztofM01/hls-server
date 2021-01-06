@@ -19,19 +19,19 @@ public class UserDtoMapper implements DtoMapper<User, UserRequest, UserResponse>
     }
 
     @Override
-    public User mapRequest(UserRequest userRequest) {
+    public User mapFromRequest(UserRequest userRequest) {
         return User.builder()
                 .name(userRequest.getName())
                 .build();
     }
 
     @Override
-    public UserResponse mapResponse(User user) {
+    public UserResponse mapToResponse(User user) {
         return UserResponse.builder()
                 .name(user.getName())
                 .audioFileInfos(user.getAudioFileInfos()
                         .stream()
-                        .map(audioFileMapper::mapResponse)
+                        .map(audioFileMapper::mapToResponse)
                         .collect(Collectors.toList()))
                 .build();
     }

@@ -1,6 +1,6 @@
 package com.sanesoft.hlsserver.mapper;
 
-public interface DtoRequestMapper<Entity, Request> {
+public interface DtoRequestMapper<T, V> {
 
-    Entity mapRequest(Request request);
+    T mapFromRequest(V v);
 }
