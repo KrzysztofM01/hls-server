@@ -34,7 +34,7 @@ public class M3U8FFmpegEncoder implements M3U8Encoder {
     }
 
     @Override
-    public Path encodeFileToM3UFormat(User user, String audioName, InputStream fileStream) throws M3U8EncoderException {
+    public Path encodeFileToM3UFormat(User user, String audioName, InputStream fileStream) {
         File tempFile = null;
         try {
             tempFile = File.createTempFile("audioForFfmpeg", ".extension");

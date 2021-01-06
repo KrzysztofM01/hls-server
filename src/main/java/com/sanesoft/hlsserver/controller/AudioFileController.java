@@ -3,11 +3,10 @@ package com.sanesoft.hlsserver.controller;
 import com.sanesoft.hlsserver.database.entity.AudioFileInfo;
 import com.sanesoft.hlsserver.database.repository.AudioFileRepository;
 import com.sanesoft.hlsserver.database.repository.UserRepository;
-import com.sanesoft.hlsserver.service.audio.exception.M3U8ReaderException;
+import com.sanesoft.hlsserver.exception.EntityNotFoundException;
+import com.sanesoft.hlsserver.service.audio.exception.M3U8EncoderException;
 import com.sanesoft.hlsserver.service.audio.m3u8.encoder.M3U8Encoder;
 import com.sanesoft.hlsserver.service.audio.m3u8.reader.M3U8FileReader;
-import com.sanesoft.hlsserver.service.audio.exception.AudioFileReadException;
-import com.sanesoft.hlsserver.service.audio.exception.M3U8EncoderException;
 import com.sanesoft.hlsserver.service.audio.reader.AudioFileReader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +20,7 @@ import java.nio.file.Path;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/users/{userName}/audio-files")
 public class AudioFileController {
 
     private final AudioFileRepository audioRepository;
@@ -30,7 +30,7 @@ public class AudioFileController {
     private final AudioFileReader audioFileReader;
 
 
-    @PostMapping("/users/{userName}/audio-files/{audioName}")
+    @PostMapping("/{audioName}")
     ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
                                             @PathVariable String userName,
                                             @PathVariable String audioName) {
@@ -47,45 +47,32 @@ public class AudioFileController {
                                         .pathToFile(path)
                                         .build());
                                 return ResponseEntity.ok().build();
-                            } catch (IOException | M3U8EncoderException e) {
-                                log.error("Error while trying to save the audio file", e);
-                                return ResponseEntity.status(500).body("");
+                            } catch (IOException e) {
+                                throw new M3U8EncoderException("Unable to read from supplied file", e);
                             }
                         })
                 )
-                .orElse(ResponseEntity.badRequest().body("User with this name does not exist."));
+                .orElseThrow(() -> new EntityNotFoundException("User with this name does not exist."));
     }
 
-    @GetMapping(value = "/users/{userName}/audio-files/index/{audioName}", produces = "audio/mpegurl")
+    @GetMapping(value = "/index/{audioName}", produces = "audio/mpegurl")
     ResponseEntity<String> getAudioIndex(@PathVariable String userName,
                                        @PathVariable String audioName) {
         return audioRepository.findByNameAndUserName(audioName, userName)
                 .map(AudioFileInfo::getPathToFile)
-                .map(s -> {
-                    try {
-                        return ResponseEntity.ok(m3U8FileReader.readEncodedM3U8File(s, userName, audioName));
-                    } catch (M3U8ReaderException e) {
-                        return ResponseEntity.status(500).body("Error while trying to read m3u8 file");
-                    }
-                })
-                .orElse(ResponseEntity.badRequest().body("Audio file not found."));
+                .map(s -> ResponseEntity.ok(m3U8FileReader.readEncodedM3U8File(s, userName, audioName)))
+                .orElseThrow(() -> new EntityNotFoundException("There is no such audio file."));
     }
 
-    @GetMapping(value = "/users/{userName}/audio-files/{audioName}/{audioPartId}", produces = "video/mp2t")
-    ResponseEntity<?> getAudioFilePart(@PathVariable String userName,
+    @GetMapping(value = "/{audioName}/{audioPartId}", produces = "video/mp2t")
+    ResponseEntity<byte[]> getAudioFilePart(@PathVariable String userName,
                                             @PathVariable String audioName,
                                             @PathVariable Integer audioPartId) {
         // TODO reading from database is not optimal, it would be best to create short-lived memory cache that
         //  would remember userName+audioName as key and path to the directory where audio chunks are stored.
         return audioRepository.findByNameAndUserName(audioName, userName)
                 .map(AudioFileInfo::getPathToFile)
-                .map(s -> {
-                    try {
-                        return ResponseEntity.ok(audioFileReader.readAudioPartFile(s.getParent(), audioPartId));
-                    } catch (AudioFileReadException e) {
-                        return ResponseEntity.status(500).body("Error while trying to read audio file");
-                    }
-                })
-                .orElse(ResponseEntity.badRequest().body("Audio file not found."));
+                .map(s -> ResponseEntity.ok(audioFileReader.readAudioPartFile(s.getParent(), audioPartId)))
+                .orElseThrow(() -> new EntityNotFoundException("There is no such audio file."));
     }
 }

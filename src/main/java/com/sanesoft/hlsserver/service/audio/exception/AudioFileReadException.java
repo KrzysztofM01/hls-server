@@ -1,6 +1,6 @@
 package com.sanesoft.hlsserver.service.audio.exception;
 
-public class AudioFileReadException extends Exception {
+public class AudioFileReadException extends AudioFileRuntimeException {
 
     public AudioFileReadException() {
     }

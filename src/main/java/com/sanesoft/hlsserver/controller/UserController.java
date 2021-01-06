@@ -15,12 +15,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/users")
 public class UserController {
 
     private final UserRepository repository;
     private final DtoMapper<User, UserRequest, UserResponse> userDtoMapper;
 
-    @GetMapping("/users")
+    @GetMapping()
     ResponseEntity<List<UserResponse>> all() {
         return ResponseEntity.ok(repository.findAll()
                 .stream()
@@ -28,13 +29,13 @@ public class UserController {
                 .collect(Collectors.toList()));
     }
 
-    @PostMapping("/users")
+    @PostMapping()
     ResponseEntity<Void> newUser(@RequestBody UserRequest newUser) {
         repository.save(userDtoMapper.mapRequest(newUser));
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/users/{name}")
+    @GetMapping("/{name}")
     ResponseEntity<UserResponse> findOne(@PathVariable String name) {
         return repository.findByName(name)
                 .map(userDtoMapper::mapResponse)
@@ -42,7 +43,7 @@ public class UserController {
                 .orElseThrow(() -> new EntityNotFoundException(name));
     }
 
-    @DeleteMapping("/users/{name}")
+    @DeleteMapping("/{name}")
     ResponseEntity<Void> deleteUser(@PathVariable String name) {
         repository.deleteByName(name);
         return ResponseEntity.ok().build();

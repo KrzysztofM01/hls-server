@@ -1,6 +1,6 @@
 package com.sanesoft.hlsserver.service.audio.exception;
 
-public class M3U8ReaderException extends Exception {
+public class M3U8ReaderException extends AudioFileRuntimeException {
 
     public M3U8ReaderException() {
     }

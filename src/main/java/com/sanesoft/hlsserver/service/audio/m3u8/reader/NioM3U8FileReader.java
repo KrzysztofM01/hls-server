@@ -24,7 +24,7 @@ public class NioM3U8FileReader implements M3U8FileReader {
     }
 
     @Override
-    public String readEncodedM3U8File(Path pathToFile, String userName, String audioName) throws M3U8ReaderException {
+    public String readEncodedM3U8File(Path pathToFile, String userName, String audioName) {
         try {
             return Files.readAllLines(pathToFile)
                     .stream()

@@ -11,7 +11,7 @@ import java.nio.file.Path;
 public class NioAudioFileReader implements AudioFileReader {
 
     @Override
-    public byte[] readAudioPartFile(Path pathToAudioRootDirectory, Integer audioPathId) throws AudioFileReadException {
+    public byte[] readAudioPartFile(Path pathToAudioRootDirectory, Integer audioPathId) {
         try {
             return Files.readAllBytes(pathToAudioRootDirectory
                     .resolve("output" + audioPathId + ".ts"));
