@@ -40,17 +40,16 @@ class AudioFileServiceImplTest {
     @InjectMocks
     private AudioFileServiceImpl audioService;
 
-    String userName = "some-user";
-    String audioName = "some-audio";
-    String someString = "some-string";
-    byte[] someBytes = {1, 2, 3};
-    Path parentPath = Path.of("parent");
-    Path somePath = parentPath.resolve("some-path");
-    AudioFileInfo audioFileInfo = AudioFileInfo.builder()
+    private final String userName = "some-user";
+    private final String audioName = "some-audio";
+    private final byte[] someBytes = {1, 2, 3};
+    private final Path parentPath = Path.of("parent");
+    private final Path somePath = parentPath.resolve("some-path");
+    private final AudioFileInfo audioFileInfo = AudioFileInfo.builder()
             .name(audioName)
             .pathToFile(somePath)
             .build();
-    User user = User.builder()
+    private final User user = User.builder()
             .name(userName)
             .build();
 
@@ -112,6 +111,7 @@ class AudioFileServiceImplTest {
     @Test
     void getAudioFileIndex_returnsPathFromAudioFileInfoFromRepository() {
         // given
+        String someString = "some-string";
         when(audioRepository.findByNameAndUserName(audioName, userName))
                 .thenReturn(Optional.of(audioFileInfo));
         when(m3U8FileReader.readEncodedM3U8File(somePath, userName, audioName))

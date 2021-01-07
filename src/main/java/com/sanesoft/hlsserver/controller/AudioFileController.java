@@ -13,16 +13,16 @@ import java.io.IOException;
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/users/{userName}/audio-files")
-public class AudioFileController { //TODO tests
+public class AudioFileController {
 
     private final AudioFileService audioFileService;
 
-
-    @PostMapping("/{audioName}")
+    @PostMapping(value="/{audioName}", consumes = "multipart/form-data")
     ResponseEntity<String> handleFileUpload(@RequestParam("file") MultipartFile file,
                                             @PathVariable String userName,
                                             @PathVariable String audioName) {
         try {
+            log.info("Received request: {}", file);
             audioFileService.saveAudioFile(userName, audioName, file.getInputStream());
             return ResponseEntity.ok().build();
         } catch (IOException e) {
