@@ -1,51 +1,40 @@
 package com.sanesoft.hlsserver.controller;
 
-import com.sanesoft.hlsserver.database.entity.User;
-import com.sanesoft.hlsserver.database.repository.UserRepository;
-import com.sanesoft.hlsserver.exception.EntityNotFoundException;
-import com.sanesoft.hlsserver.mapper.DtoMapper;
 import com.sanesoft.hlsserver.model.request.UserRequest;
 import com.sanesoft.hlsserver.model.response.UserResponse;
+import com.sanesoft.hlsserver.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController { //TODO tests
 
-    private final UserRepository repository;
-    private final DtoMapper<User, UserRequest, UserResponse> userDtoMapper;
+    private final UserService userService;
 
     @GetMapping()
     ResponseEntity<List<UserResponse>> all() {
-        return ResponseEntity.ok(repository.findAll()
-                .stream()
-                .map(userDtoMapper::mapToResponse)
-                .collect(Collectors.toList()));
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @PostMapping()
     ResponseEntity<Void> newUser(@RequestBody UserRequest newUser) {
-        repository.save(userDtoMapper.mapFromRequest(newUser));
+        userService.addUser(newUser);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{name}")
     ResponseEntity<UserResponse> findOne(@PathVariable String name) {
-        return repository.findByName(name)
-                .map(userDtoMapper::mapToResponse)
-                .map(ResponseEntity::ok)
-                .orElseThrow(() -> new EntityNotFoundException(name));
+        return ResponseEntity.ok(userService.getUser(name));
     }
 
     @DeleteMapping("/{name}")
     ResponseEntity<Void> deleteUser(@PathVariable String name) {
-        repository.deleteByName(name);
+        userService.deleteUser(name);
         return ResponseEntity.ok().build();
     }
 }

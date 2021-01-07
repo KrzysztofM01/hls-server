@@ -18,6 +18,13 @@ public class HlsServerExceptionHandler {
     }
 
     @ResponseBody
+    @ExceptionHandler(EntityAlreadyExistsException.class)
+    ResponseEntity<String> entityNotFoundHandler(EntityAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ex.getMessage());
+    }
+
+    @ResponseBody
     @ExceptionHandler(AudioFileRuntimeException.class)
     ResponseEntity<String> audioFileExceptionHandler(AudioFileRuntimeException ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
