@@ -22,7 +22,6 @@ public class AudioFileController {
                                             @PathVariable String userName,
                                             @PathVariable String audioName) {
         try {
-            log.info("Received request: {}", file);
             audioFileService.saveAudioFile(userName, audioName, file.getInputStream());
             return ResponseEntity.ok().build();
         } catch (IOException e) {
