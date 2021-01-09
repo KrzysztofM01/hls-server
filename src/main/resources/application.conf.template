@@ -1,0 +1,5 @@
+root-audio-file-save-path="E:\\tmp"
+audio-part-duration=5s
+audio-bit-rate=128000
+path-to-ffmpeg="E:\\Programs\\ffmpeg\\bin\\ffmpeg"
+audio-file-part-uri="http://localhost:8080"
