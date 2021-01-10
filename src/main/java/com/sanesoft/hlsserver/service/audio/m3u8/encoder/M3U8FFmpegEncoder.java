@@ -42,8 +42,7 @@ public class M3U8FFmpegEncoder implements M3U8Encoder {
                     tempFile.getAbsolutePath(), pathToM3U8File.toString()
             );
             ffmpegExecutor.execute(ffmpegCmds);
-            m3U8FileWriter.storeM3U8Files(pathToM3U8File.getParent());
-            return pathToM3U8File;
+            return m3U8FileWriter.storeM3U8Files(pathToM3U8File);
         } catch (IOException e) {
             throw new M3U8EncoderException("Error while encoding file", e);
         } finally {

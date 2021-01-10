@@ -2,7 +2,9 @@ package com.sanesoft.hlsserver.service.audio.m3u8.writer;
 
 import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
-import com.sanesoft.hlsserver.config.AudioFileConfig;
+import com.sanesoft.hlsserver.config.GcpStorageConfig;
+import com.sanesoft.hlsserver.service.audio.exception.M3U8WriterException;
+import com.sanesoft.hlsserver.service.audio.storage.StorageType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,55 +17,46 @@ import java.nio.file.Path;
 public class GcpM3U8FileWriter implements M3U8FileWriter {
 
     private final Storage storage;
-    private final AudioFileConfig config;
-
-    // TODO config:
-    //  -
+    private final GcpStorageConfig config;
 
     @Override
     public Path getPathWhereFileShouldBeStored() {
         try {
-            return Files.createTempDirectory("saas"); //TODO
+            return Files.createTempDirectory("m3u8_temp_dir");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new M3U8WriterException("Unable to create temporary directory for audio storage", e);
         }
-        return null;
     }
 
     @Override
-    public void storeM3U8Files(Path m3u8ParentDirectory) {
-        // TODO for each file in that directory we gotta save it
-        // TODO some config based factory which will choose proper implementation of this class
-        try {
-            Files.newDirectoryStream(m3u8ParentDirectory)
-                    .forEach(path -> {
-                        try {
-                            try {
-                                storage.create(
-                                        BlobInfo.newBuilder(
-                                                "hls-server-bucket",
-                                                config.getRootAudioFileSavePath().resolve(path.getFileName()).toString() // TODO fix
-                                                ).build(),
-                                        Files.readAllBytes(path)
-                                        );
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        } finally {
-                            try {
-                                Files.delete(path);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
+    public Path storeM3U8Files(Path m3u8OutputFile) {
+        Path parentAudioDir = m3u8OutputFile.getParent();
+        Path parentGcpPath = config.getCloudStorageDirectory()
+                .resolve(parentAudioDir.getParent().getFileName())
+                .resolve(parentAudioDir.getFileName());
+        try (var stream = Files.newDirectoryStream(parentAudioDir)) {
+            for (Path pathInDirectory : stream) {
+                storage.create(
+                        BlobInfo.newBuilder(
+                                config.getBucketName(),
+                                parentGcpPath
+                                        .resolve(pathInDirectory.getFileName())
+                                        .toAbsolutePath()
+                                        .toString()
+                        ).build(),
+                        Files.readAllBytes(pathInDirectory)
+                );
+                Files.delete(pathInDirectory);
+            }
+            Files.delete(parentAudioDir);
+            return parentGcpPath.resolve("output.m3u8");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new M3U8WriterException("Unable to store files in cloud", e);
         }
-        try {
-            Files.delete(m3u8ParentDirectory); // TODO if ffmpeg throws error this wont be done, maybe expose new method cleanStuff for this interface?
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    }
+
+    @Override
+    public StorageType getStorageType() {
+        return StorageType.GCP;
     }
 }

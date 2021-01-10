@@ -1,6 +1,7 @@
 package com.sanesoft.hlsserver.service.audio.reader;
 
 import com.sanesoft.hlsserver.service.audio.exception.AudioFileReadException;
+import com.sanesoft.hlsserver.service.audio.storage.StorageType;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -18,5 +19,10 @@ public class NioAudioFileReader implements AudioFileReader {
         } catch (IOException e) {
             throw new AudioFileReadException("Error while trying to read audio file", e);
         }
+    }
+
+    @Override
+    public StorageType getStorageType() {
+        return StorageType.LOCAL;
     }
 }

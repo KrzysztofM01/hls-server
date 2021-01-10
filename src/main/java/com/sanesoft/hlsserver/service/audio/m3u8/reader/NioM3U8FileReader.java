@@ -2,6 +2,7 @@ package com.sanesoft.hlsserver.service.audio.m3u8.reader;
 
 import com.sanesoft.hlsserver.config.M3U8FileReaderConfig;
 import com.sanesoft.hlsserver.service.audio.exception.M3U8ReaderException;
+import com.sanesoft.hlsserver.service.audio.storage.StorageType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -47,5 +48,10 @@ public class NioM3U8FileReader implements M3U8FileReader {
         } catch (IOException e) {
             throw new M3U8ReaderException("Error while trying to read m3u8 file", e);
         }
+    }
+
+    @Override
+    public StorageType getStorageType() {
+        return StorageType.LOCAL;
     }
 }
