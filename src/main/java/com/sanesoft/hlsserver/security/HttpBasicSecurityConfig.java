@@ -11,6 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * Responsible for setting up basic authentication in application.
+ *
+ * @author kmirocha
+ */
 @Configuration
 @EnableWebSecurity
 public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {

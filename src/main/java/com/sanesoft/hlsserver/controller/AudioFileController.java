@@ -9,6 +9,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+/**
+ * Responsible for handling requests and responses connected with {@link AudioFileService}.
+ *
+ * @author kmirocha
+ */
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -30,9 +35,9 @@ public class AudioFileController {
     }
 
     @GetMapping(value = "/index/{audioName}", produces = "audio/mpegurl")
-    ResponseEntity<String> getAudioIndex(@PathVariable String userName,
+    ResponseEntity<String> getAudioMetadata(@PathVariable String userName,
                                        @PathVariable String audioName) {
-        return ResponseEntity.ok(audioFileService.getAudioFileIndex(userName, audioName));
+        return ResponseEntity.ok(audioFileService.getAudioFileMetadata(userName, audioName));
     }
 
     @GetMapping(value = "/{audioName}/{audioPartId}", produces = "video/mp2t")

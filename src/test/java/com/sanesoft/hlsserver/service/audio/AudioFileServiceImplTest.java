@@ -109,7 +109,7 @@ class AudioFileServiceImplTest {
     }
 
     @Test
-    void getAudioFileIndex_returnsPathFromAudioFileInfoFromRepository() {
+    void getAudioFileMetadata_returnsPathFromAudioFileInfoFromRepository() {
         // given
         String someString = "some-string";
         when(audioRepository.findByNameAndUserName(audioName, userName))
@@ -118,14 +118,14 @@ class AudioFileServiceImplTest {
                 .thenReturn(someString);
 
         // when
-        var result = audioService.getAudioFileIndex(userName, audioName);
+        var result = audioService.getAudioFileMetadata(userName, audioName);
 
         // then
         assertEquals(someString, result);
     }
 
     @Test
-    void getAudioFileIndexWithNonExistingAudio_throwsEntityNotFoundException() {
+    void getAudioFileMetadataWithNonExistingAudio_throwsEntityNotFoundException() {
         // given
         when(audioRepository.findByNameAndUserName(audioName, userName))
                 .thenReturn(Optional.empty());
@@ -133,7 +133,7 @@ class AudioFileServiceImplTest {
         // when
         var result = assertThrows(
                 EntityNotFoundException.class,
-                () -> audioService.getAudioFileIndex(userName, audioName)
+                () -> audioService.getAudioFileMetadata(userName, audioName)
         );
 
         // then

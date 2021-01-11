@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Implementation of {@link FfmpegExecutorWrapper} based on bramp ffmpeg command wrapper.
+ *
+ * @author kmirocha
+ */
 @Service
 public class BrampFfmpegExecutorWrapper implements FfmpegExecutorWrapper {
 

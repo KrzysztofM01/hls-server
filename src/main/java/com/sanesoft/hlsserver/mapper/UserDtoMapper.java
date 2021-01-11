@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
+/**
+ * Responsible for mapping database entity {@link User} to rest response {@link UserResponse} and
+ * from {@link UserRequest}
+ *
+ * @author kmirocha
+ */
 @Service
 public class UserDtoMapper implements DtoMapper<User, UserRequest, UserResponse> {
 

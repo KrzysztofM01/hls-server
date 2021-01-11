@@ -7,6 +7,11 @@ import javax.persistence.*;
 import java.time.Instant;
 import java.util.List;
 
+/**
+ * Entity which represents basic application user which can upload and download his audio files.
+ *
+ * @author kmirocha
+ */
 @Entity
 @Data
 @Builder

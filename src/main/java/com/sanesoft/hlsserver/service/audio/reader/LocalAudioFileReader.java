@@ -8,6 +8,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Responsible for reading audio file chunk contents from local storage.
+ *
+ * @author kmirocha
+ */
 @Service
 public class LocalAudioFileReader implements AudioFileReader {
 

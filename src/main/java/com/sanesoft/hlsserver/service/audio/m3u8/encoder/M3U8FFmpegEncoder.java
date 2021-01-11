@@ -16,6 +16,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+/**
+ * Implementation of {@link M3U8FFmpegEncoder} which uses ffmpeg library to change audio file stream into
+ * m3u8 metadata file along with splitting audio into smaller chunks.
+ *
+ * @author kmirocha
+ */
 @Service
 @Slf4j
 @RequiredArgsConstructor

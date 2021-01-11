@@ -10,6 +10,12 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 
+/**
+ * GCP implementation of {@link M3U8FileReader} which retrieves m3u8 metadata file from local storage and interprets it
+ * with {@link M3U8OutputPartReplacerUtil}.
+ *
+ * @author kmirocha
+ */
 @Service
 public class LocalM3U8FileReader implements M3U8FileReader {
 

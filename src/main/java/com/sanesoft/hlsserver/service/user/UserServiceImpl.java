@@ -12,6 +12,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of {@link UserService} which maps database entities using {@link #userDtoMapper} and stores/retrieves
+ * information from database via {@link UserRepository}.
+ *
+ * @author kmirocha
+ */
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {

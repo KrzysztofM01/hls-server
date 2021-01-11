@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 
+/**
+ * Typesafe implementation of {@link GcpStorageConfig}.
+ *
+ * @author kmirocha
+ */
 @Component
 @RequiredArgsConstructor
 public class TypesafeGcpStorageConfig implements GcpStorageConfig {

@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+/**
+ * Responsible for handling exceptions in application and returning propose {@link ResponseEntity} to API's client.
+ *
+ * @author kmirocha
+ */
 @ControllerAdvice
 @Slf4j
 public class HlsServerExceptionHandler {

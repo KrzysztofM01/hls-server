@@ -12,6 +12,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * Responsible for writing m3u8 metadata file along with audio chunks to google storage.
+ *
+ * @author kmirocha
+ */
 @RequiredArgsConstructor
 @Service
 public class GcpM3U8FileWriter implements M3U8FileWriter {

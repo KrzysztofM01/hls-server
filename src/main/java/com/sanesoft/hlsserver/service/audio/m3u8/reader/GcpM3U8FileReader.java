@@ -10,6 +10,12 @@ import org.springframework.stereotype.Service;
 import java.nio.file.Path;
 import java.util.stream.Collectors;
 
+/**
+ * GCP implementation of {@link M3U8FileReader} which retrieves m3u8 metadata file from google storage and interprets it
+ * with {@link M3U8OutputPartReplacerUtil}.
+ *
+ * @author kmirocha
+ */
 @Service
 @RequiredArgsConstructor
 public class GcpM3U8FileReader implements M3U8FileReader {

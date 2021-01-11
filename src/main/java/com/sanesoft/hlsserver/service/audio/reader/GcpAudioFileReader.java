@@ -8,6 +8,11 @@ import org.springframework.stereotype.Service;
 
 import java.nio.file.Path;
 
+/**
+ * Responsible for reading audio file chunk contents from google storage.
+ *
+ * @author kmirocha
+ */
 @Service
 @RequiredArgsConstructor
 public class GcpAudioFileReader implements AudioFileReader {

@@ -10,6 +10,11 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
+/**
+ * Configuration which binds proper implementation of interfaces that uses storage based on configured {@link #type}.
+ *
+ * @author kmirocha
+ */
 @Configuration
 @RequiredArgsConstructor
 public class StorageTypeConfiguration {

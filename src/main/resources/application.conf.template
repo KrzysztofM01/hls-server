@@ -4,4 +4,4 @@ audio-bit-rate=128000
 path-to-ffmpeg="E:\\Programs\\ffmpeg\\bin\\ffmpeg"
 audio-file-part-uri="http://localhost:8080"
 bucket-name=hls-server-bucket
-gcp-storage-directory="D:\\test\\audios"
+gcp-storage-directory="D:\\test\\audio"
