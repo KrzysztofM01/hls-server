@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 import java.nio.file.Path;
 import java.time.Duration;
 
+/**
+ * Typesafe implementation of {@link AudioFileConfig}.
+ *
+ * @author kmirocha
+ */
 @Component
 public class TypesafeAudioFileConfig implements AudioFileConfig {
 

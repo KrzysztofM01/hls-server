@@ -6,6 +6,11 @@ import org.springframework.stereotype.Component;
 
 import java.net.URI;
 
+/**
+ * Typesafe implementation of {@link M3U8FileReaderConfig}.
+ *
+ * @author kmirocha
+ */
 @Component
 public class TypesafeM3U8FileReaderConfig implements M3U8FileReaderConfig {
 

@@ -56,10 +56,10 @@ class AudioFileControllerTest {
     }
 
     @Test
-    void getAudioFileIndex_callsServiceToReturnIndex() throws Exception {
+    void getAudioFileMetadata_callsServiceToReturnIndex() throws Exception {
         // given
         String someM3U8Index = "something";
-        when(service.getAudioFileIndex(userName, audioName))
+        when(service.getAudioFileMetadata(userName, audioName))
                 .thenReturn(someM3U8Index);
 
         // expect

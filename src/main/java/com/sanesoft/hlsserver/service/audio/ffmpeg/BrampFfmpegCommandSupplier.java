@@ -7,6 +7,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Implementation of {@link FfmpegCommandSupplier} based on bramp ffmpeg command wrapper.
+ *
+ * @author kmirocha
+ */
 @Service
 @RequiredArgsConstructor
 public class BrampFfmpegCommandSupplier implements FfmpegCommandSupplier {

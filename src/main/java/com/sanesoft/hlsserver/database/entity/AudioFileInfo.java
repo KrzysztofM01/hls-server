@@ -8,6 +8,12 @@ import javax.persistence.*;
 import java.nio.file.Path;
 import java.time.Instant;
 
+/**
+ * Entity containing information about uploaded audio file. {@link #pathToFile} contains path to m3u8 metadata file
+ * where information about chunks and their location is stored.
+ *
+ * @author kmirocha
+ */
 @Entity
 @Data
 @Builder

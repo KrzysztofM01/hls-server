@@ -15,9 +15,9 @@ import java.nio.file.Path;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class NioAudioFileReaderTest {
+class LocalAudioFileReaderTest {
 
-    private final AudioFileReader reader = new NioAudioFileReader();
+    private final AudioFileReader reader = new LocalAudioFileReader();
 
     private Path tempDirPath;
     private Path tempPath;

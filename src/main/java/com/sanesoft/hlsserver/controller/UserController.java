@@ -9,6 +9,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Responsible for handling requests and responses connected with {@link UserService}.
+ *
+ * @author kmirocha
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users")

@@ -1,22 +1,18 @@
 package com.sanesoft.hlsserver.service.audio.m3u8.encoder;
 
 import com.google.common.io.Resources;
-import com.sanesoft.hlsserver.config.AudioFileConfig;
 import com.sanesoft.hlsserver.service.audio.exception.M3U8EncoderException;
 import com.sanesoft.hlsserver.service.audio.ffmpeg.FfmpegCommandSupplier;
 import com.sanesoft.hlsserver.service.audio.ffmpeg.FfmpegExecutorWrapper;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
+import com.sanesoft.hlsserver.service.audio.m3u8.writer.M3U8FileWriter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.util.FileSystemUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
@@ -27,7 +23,7 @@ import static org.mockito.Mockito.*;
 class M3U8FFmpegEncoderTest {
 
     @Mock
-    private AudioFileConfig config;
+    private M3U8FileWriter writer;
     @Mock
     private FfmpegExecutorWrapper ffmpegExecutor;
     @Mock
@@ -35,27 +31,19 @@ class M3U8FFmpegEncoderTest {
     @InjectMocks
     private M3U8FFmpegEncoder encoder;
 
-    private Path tempDirPath;
-
-    @BeforeEach
-    void init() throws IOException {
-        tempDirPath = Files.createTempDirectory("some-temp-dir");
-    }
-
-    @AfterEach
-    void tearDown() throws IOException {
-        FileSystemUtils.deleteRecursively(tempDirPath);
-    }
+    private final Path tempDirPath = Path.of("/some/path");
 
     @Test
     void encodeFileToM3U8Format_callsUnderlyingInterfaces() throws IOException {
         // given
         List<String> someList = List.of("cmd1", "cmd2");
         Path desiredPath = tempDirPath.resolve("user").resolve("audio").resolve("output.m3u8");
-        when(config.getRootAudioFileSavePath())
+        when(writer.getPathWhereFileShouldBeStored())
                 .thenReturn(tempDirPath);
         when(ffmpegCommandSupplier.getFfmpegCommands(anyString(), eq(desiredPath.toString())))
                 .thenReturn(someList);
+        when(writer.storeM3U8Files(desiredPath))
+                .thenReturn(desiredPath);
 
         // when
         var result = encoder.encodeFileToM3UFormat("user", "audio",

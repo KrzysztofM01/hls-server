@@ -14,6 +14,13 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.nio.file.Path;
 
+/**
+ * Implementation of {@link AudioFileService} which first searches the {@link AudioFileInfoRepository} for information
+ * regarding request audio files and then returns or stores proper information depending on the method using underlying
+ * interfaces.
+ *
+ * @author kmirocha
+ */
 @Service
 @RequiredArgsConstructor
 public class AudioFileServiceImpl implements AudioFileService {
@@ -49,7 +56,7 @@ public class AudioFileServiceImpl implements AudioFileService {
     }
 
     @Override
-    public String getAudioFileIndex(String userName, String audioName) {
+    public String getAudioFileMetadata(String userName, String audioName) {
         return audioRepository.findByNameAndUserName(audioName, userName)
                 .map(AudioFileInfo::getPathToFile)
                 .map(s -> m3U8FileReader.readEncodedM3U8File(s, userName, audioName))
