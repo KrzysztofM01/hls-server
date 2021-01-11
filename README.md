@@ -1,9 +1,9 @@
 # Simple spring based HTTP live streaming (HLS) server
 
-####Hard requirements for application to work:
+#### Hard requirements for application to work:
 - ffmpeg
 
-####Allows authorized clients (Spring security basic auth) to:
+#### Allows authorized clients (Spring security basic auth) to:
 - Create, read, update and delete users (basic CRUD with usage of spring-data)
 - Upload audio files to server and download them in hls-like streaming way
 
