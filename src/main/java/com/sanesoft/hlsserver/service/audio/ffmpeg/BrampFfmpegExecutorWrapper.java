@@ -24,7 +24,7 @@ public class BrampFfmpegExecutorWrapper implements FfmpegExecutorWrapper {
     @Override
     public void execute(List<String> args) {
         try {
-            // TODO gotta make it non blocking
+            // TODO gotta make it non blocking - the downside then is that we can return OK whereas this actually failed
             ffmpeg.run(args);
         } catch (IOException e) {
             throw new M3U8EncoderException("Error while encoding file", e);

@@ -18,12 +18,12 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class NioM3U8FileReaderTest {
+class LocalM3U8FileReaderTest {
 
     @Mock
     private M3U8FileReaderConfig config;
     @InjectMocks
-    private NioM3U8FileReader reader;
+    private LocalM3U8FileReader reader;
 
     @Test
     void readEncodedM3U8File_returnsProperResult() throws URISyntaxException {

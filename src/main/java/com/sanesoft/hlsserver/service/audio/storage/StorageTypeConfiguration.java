@@ -6,19 +6,19 @@ import com.sanesoft.hlsserver.service.audio.reader.AudioFileReader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
-@Service
+@Configuration
 @RequiredArgsConstructor
-public class StorageTypeConfiguration { //TODO fix this class
+public class StorageTypeConfiguration {
 
-    @Value("${storage.type}")
-    private final String type; //TODO
     private final List<AudioFileReader> audioFileReaders;
     private final List<M3U8FileWriter> m3U8FileWriters;
     private final List<M3U8FileReader> m3U8FileReaders;
+    @Value("${storage.type}")
+    private StorageType type;
 
     @Bean
     AudioFileReader audioFileReader() {
@@ -37,8 +37,8 @@ public class StorageTypeConfiguration { //TODO fix this class
 
     private <T extends StorageTypeBasedInterface> T getProperInterface(List<T> list) {
         return list.stream()
-                .filter(s -> s.getStorageType().name().equals(type)) // TODO
+                .filter(s -> s.getStorageType() == type)
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException("TODO")); // TODO
+                .orElseThrow(() -> new IllegalStateException("There is no proper interface implementation for type: " + type));
     }
 }

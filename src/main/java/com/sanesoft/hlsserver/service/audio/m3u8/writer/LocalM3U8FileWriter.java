@@ -9,7 +9,7 @@ import java.nio.file.Path;
 
 @RequiredArgsConstructor
 @Service
-public class OnDiskM3U8FileWriter implements M3U8FileWriter {
+public class LocalM3U8FileWriter implements M3U8FileWriter {
 
     private final AudioFileConfig config;
 

@@ -31,6 +31,9 @@ public class GcpM3U8FileWriter implements M3U8FileWriter {
     @Override
     public Path storeM3U8Files(Path m3u8OutputFile) {
         Path parentAudioDir = m3u8OutputFile.getParent();
+        System.out.println(parentAudioDir);
+        System.out.println(parentAudioDir.getParent());
+        System.out.println(parentAudioDir.getParent().getFileName());
         Path parentGcpPath = config.getCloudStorageDirectory()
                 .resolve(parentAudioDir.getParent().getFileName())
                 .resolve(parentAudioDir.getFileName());
